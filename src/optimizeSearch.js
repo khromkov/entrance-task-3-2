@@ -1,7 +1,7 @@
-const getPriceArray = require('./getPriceArray');
-const isCorrectRunTime = require('./isCorrectRunTime');
-const calculatePrice = require('./calculatePrice');
-const formatOptimizeSearch = require('./formatOptimizeSearch');
+const getPriceArray = require('./utils/getPriceArray');
+const isCorrectRunTime = require('./utils/isCorrectRunTime');
+const calculatePrice = require('./utils/calculatePrice');
+const formatOptimizeSearch = require('./utils/formatOptimizeSearch');
 
 module.exports = data => {
   const { maxPower, devices, rates } = data;

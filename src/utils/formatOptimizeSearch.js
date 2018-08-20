@@ -1,4 +1,4 @@
-const floatToFixed = require('./utils/floatToFixed');
+const floatToFixed = require('./floatToFixed');
 
 module.exports = (data, position) => {
   const { devices, minPrice } = data;

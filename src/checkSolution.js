@@ -4,7 +4,7 @@ guard-for-in,
 no-restricted-syntax
 */
 
-const getPriceArray = require('./getPriceArray');
+const getPriceArray = require('./utils/getPriceArray');
 const floatToFixed = require('./utils/floatToFixed');
 
 module.exports = (input, output) => {

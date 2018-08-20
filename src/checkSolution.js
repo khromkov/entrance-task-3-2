@@ -33,6 +33,8 @@ module.exports = (input, output) => {
     value: 0,
   };
 
+  const devicesRunHour = {};
+
   for (const key in schedule) {
     const hour = parseInt(key, 10);
     schedule[hour].forEach(id => {
@@ -55,10 +57,40 @@ module.exports = (input, output) => {
         consumedEnergy.devices[id] = 0;
       }
 
+      if (!devicesRunHour[id]) {
+        devicesRunHour[id] = new Array(24).fill(false);
+      }
+
+      devicesRunHour[id][hour] = true;
+
       const price = (power * priceArray[hour]) / 1000;
       consumedEnergy.devices[id] = floatToFixed(consumedEnergy.devices[id] + price, 4);
       consumedEnergy.value = floatToFixed(consumedEnergy.value + price, 4);
     });
+  }
+
+  for (const id in normalizeDevices) {
+    let changes = 0;
+    let duration = 0;
+
+    const deviceRunHour = devicesRunHour[id];
+    deviceRunHour.forEach((flag, index) => {
+      if (flag) {
+        duration += 1;
+      }
+
+      if (index !== 0 && deviceRunHour[index] !== deviceRunHour[index - 1]) {
+        changes += 1;
+        if (changes === 3) {
+          throw new Error(`runtime of ${id} is not one interval`);
+        }
+      }
+    });
+
+    const device = normalizeDevices[id];
+    if (duration !== device.duration) {
+      throw new Error(`duration of ${id} no equal to ${device.duration}`);
+    }
   }
 
   return consumedEnergy;

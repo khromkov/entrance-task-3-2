@@ -9,14 +9,14 @@ const withPerformanceLogger = require('../utils/withPerformanceLogger');
 const withPLOptimizeSearch = withPerformanceLogger(optimizeSearch);
 
 describe('optimizeSearch', () => {
-  test('test', () => {
+  test('problem example test', () => {
     const input = require('./input.json');
     const output = require('./output.json');
 
     expect(checkSolution(input, withPLOptimizeSearch(input))).toEqual(output.consumedEnergy);
   });
 
-  test('worst', () => {
+  test('worst case', () => {
     const input = {
       devices: [
         {
@@ -66,5 +66,39 @@ describe('optimizeSearch', () => {
     };
 
     expect(withPLOptimizeSearch(input)).toEqual(output);
+  });
+
+  test('no solutions', () => {
+    const input = {
+      devices: [
+        {
+          id: '1',
+          power: 1,
+          duration: 24,
+        },
+        {
+          id: '2',
+          power: 1,
+          duration: 1,
+        },
+      ],
+      rates: [
+        {
+          from: 0,
+          to: 1,
+          value: 100,
+        },
+        {
+          from: 1,
+          to: 0,
+          value: 101,
+        },
+      ],
+      maxPower: 1,
+    };
+
+    expect(() => {
+      withPLOptimizeSearch(input);
+    }).toThrow();
   });
 });

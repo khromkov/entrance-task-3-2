@@ -36,5 +36,8 @@
   },
   "jest": {
     "testEnvironment": "node"
+  },
+  "dependencies": {
+    "joi": "^13.6.0"
   }
 }
